@@ -15,7 +15,9 @@ class Settings(BaseSettings):
     # Yandex OAuth
     YANDEX_CLIENT_ID: str
     YANDEX_CLIENT_SECRET: str
-    YANDEX_REDIRECT_URI: str
+    SERVER_DOMAIN: str = "http://localhost:8000"
+    TOKEN_URL: str = "https://oauth.yandex.ru/token"
+    USER_INFO_URL: str = "https://login.yandex.ru/info"
 
     # JWT
     SECRET_KEY: str
@@ -42,6 +44,11 @@ class Settings(BaseSettings):
     @property
     def DATABASE_URL(self) -> str:
         return f"postgresql+psycopg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+
+    @computed_field
+    @property
+    def YANDEX_REDIRECT_URI(self) -> str:
+        return f"{self.SERVER_DOMAIN}/auth/yandex/callback"
 
 
 settings = Settings()
