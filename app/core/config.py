@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     MINIO_BUCKET_NAME: str
 
     # Admin
-    ADMIN_YANDEX_ID: Optional[str] = None
+    ADMIN_EMAIL: Optional[str] = None
 
     model_config = SettingsConfigDict(
         env_file=".env",

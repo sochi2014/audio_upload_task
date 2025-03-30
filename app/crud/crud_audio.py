@@ -26,10 +26,13 @@ class CRUDAudio:
         return db_obj
 
     async def get_user_audio_files(
-        self, db: AsyncSession, *, user_id: int
+        self, db: AsyncSession, *, user_id: int, skip: int = 0, limit: int = 100
     ) -> List[AudioFile]:
         result = await db.execute(
-            select(self.model).where(self.model.user_id == user_id)
+            select(self.model)
+            .where(self.model.user_id == user_id)
+            .offset(skip)
+            .limit(limit)
         )
         return list(result.scalars().all())
 
