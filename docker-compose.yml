@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: audio_upload_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - minio
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_SERVER=postgres
+      - MINIO_HOST=http://minio:9000
+    restart: on-failure
+
+  postgres:
+    image: postgres:16.2-alpine
+    container_name: audio_upload_db
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  minio:
+    container_name: audio_upload_minio
+    image: minio/minio:RELEASE.2024-03-10T02-53-48Z
+    command: server /data
+    env_file:
+      - .env
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  postgres_data:
+  minio_data: 
