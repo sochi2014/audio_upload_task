@@ -15,7 +15,7 @@ class UserCreate(UserBase):
     email: EmailStr
     yandex_id: str
     first_name: str
-    last_name: str
+    last_name: str = ""
 
 
 class UserUpdate(UserBase):

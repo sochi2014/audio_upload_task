@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     # Yandex OAuth
     YANDEX_CLIENT_ID: str
     YANDEX_CLIENT_SECRET: str
-    SERVER_DOMAIN: str = "http://localhost:8000"
+    SERVER_DOMAIN: str
     TOKEN_URL: str = "https://oauth.yandex.ru/token"
     USER_INFO_URL: str = "https://login.yandex.ru/info"
 

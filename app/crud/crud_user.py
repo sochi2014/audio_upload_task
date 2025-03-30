@@ -12,8 +12,10 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         result = await db.execute(select(User).where(User.email == email))
         return result.scalar_one_or_none()
 
-    async def get_by_yandex_id(self, db: AsyncSession, *, yandex_id: str) -> Optional[User]:
-        result = await db.execute(select(User).where(User.yandex_id == yandex_id))
+    @staticmethod
+    async def get_by_yandex_id(db: AsyncSession, yandex_id: str):
+        stmt = select(User).where(User.yandex_id == yandex_id)
+        result = await db.execute(stmt)
         return result.scalar_one_or_none()
 
     async def get_multi(

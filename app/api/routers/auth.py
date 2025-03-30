@@ -39,11 +39,14 @@ async def yandex_callback(
     db_user = await user.get_by_yandex_id(db, user_info["id"])
 
     if not db_user:
+        full_name = user_info.get("real_name", "")
+        last_name = full_name.split()[-1] if full_name and len(full_name.split()) > 1 else ""
+        
         user_in = UserCreate(
             yandex_id=user_info["id"],
             email=user_info["default_email"],
             first_name=user_info["real_name"],
-            last_name=user_info.get("real_name", "").split()[-1] if user_info.get("real_name") else None
+            last_name=last_name
         )
         db_user = await user.create(db, obj_in=user_in)
 
