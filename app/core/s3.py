@@ -112,4 +112,4 @@ class S3Client:
                 return False
 
 
-s3_client = S3Client() 
+s3_client = S3Client()
