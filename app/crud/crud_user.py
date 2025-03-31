@@ -8,10 +8,6 @@ from app.schemas.user import UserCreate, UserUpdate
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
-    async def get_by_email(self, db: AsyncSession, *, email: str) -> Optional[User]:
-        result = await db.execute(select(User).where(User.email == email))
-        return result.scalar_one_or_none()
-
     @staticmethod
     async def get_by_yandex_id(db: AsyncSession, yandex_id: str):
         stmt = select(User).where(User.yandex_id == yandex_id)

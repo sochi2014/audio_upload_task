@@ -43,7 +43,6 @@ class AudioFile(Base):
         server_default=func.now()
     )
 
-    # Отношение к пользователю
     user: Mapped["User"] = relationship(back_populates="audio_files")
 
     def __repr__(self) -> str:

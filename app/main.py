@@ -1,9 +1,9 @@
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routers import auth, audio, admin
-from app.core.config import settings
 from app.core.s3 import s3_client
 
 
@@ -17,7 +17,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Audio Upload Service", lifespan=lifespan)
 
-# Настройка CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -26,7 +25,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Подключаем роутеры
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(audio.router, prefix="/audio", tags=["audio"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
